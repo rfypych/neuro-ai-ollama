@@ -33,6 +33,7 @@ export default function AdminDashboard() {
       // kita akan tampilkan model default saja
       setModels([
         { name: 'qwen2.5:3b', size: '3B', quantization: 'Q4_0' },
+        { name: 'gemma:2b', size: '2B', quantization: 'Q4_0' },
         { name: 'llama3:8b', size: '8B', quantization: 'Q4_0' },
         { name: 'mistral:7b', size: '7B', quantization: 'Q4_0' },
         { name: 'phi3:3b', size: '3B', quantization: 'Q4_0' }

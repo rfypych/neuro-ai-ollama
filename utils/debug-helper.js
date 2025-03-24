@@ -150,7 +150,7 @@ async function runDiagnostics() {
   const modelStatus = {};
   
   // Model default yang digunakan Neura AI
-  const defaultModels = ['qwen2.5:3b', 'llama3:8b', 'mistral:7b', 'phi3:3b'];
+  const defaultModels = ['qwen2.5:3b', 'gemma:2b', 'llama3:8b', 'mistral:7b', 'phi3:3b'];
   
   // Memeriksa setiap model
   for (const model of defaultModels) {

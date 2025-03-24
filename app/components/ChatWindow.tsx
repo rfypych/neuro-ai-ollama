@@ -244,6 +244,7 @@ export default function ChatWindow({
           className="bg-secondary text-secondary-foreground px-3 py-2 rounded-md"
         >
           <option value="qwen2.5:3b">Qwen 2.5 (3B)</option>
+          <option value="gemma:2b">Gemma (2B)</option>
           <option value="llama3:8b">Llama 3 (8B)</option>
           <option value="mistral:7b">Mistral (7B)</option>
           <option value="phi3:3b">Phi-3 (3B)</option>
