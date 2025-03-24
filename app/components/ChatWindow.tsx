@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
 import Link from 'next/link';
+import Logo from './Logo';
 
 interface Message {
   id: string;
@@ -236,7 +237,7 @@ export default function ChatWindow({
     <div className="flex flex-col h-full max-h-screen">
       {/* Header dengan model selector */}
       <div className="bg-card border-b p-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold">Neura AI</h2>
+        <Logo />
         
         <select 
           value={activeModel}
@@ -251,47 +252,98 @@ export default function ChatWindow({
       
       {/* Chat messages area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div 
-            key={message.id}
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div 
-              className={`max-w-[80%] p-3 rounded-lg ${
-                message.role === 'user' 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'bg-secondary text-secondary-foreground'
-              }`}
-            >
-              <div className="text-sm opacity-70 mb-1">
-                {message.role === 'user' ? 'Anda' : 'Neura AI'} • {formatTime(message.createdAt)}
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+            <div className="w-24 h-24">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-primary/50"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-primary">Selamat Datang di Neura AI</h3>
+              <p className="text-muted-foreground max-w-md">
+                Saya adalah asisten AI yang siap membantu Anda dengan pertanyaan seputar coding, analisis data, dan topik lainnya.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
+              <div className="bg-card p-4 rounded-lg border space-y-2">
+                <h4 className="font-semibold text-primary">💡 Tips Penggunaan</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Gunakan Ctrl+Enter untuk mengirim pesan</li>
+                  <li>• Pilih model AI sesuai kebutuhan</li>
+                  <li>• Tanyakan hal spesifik untuk hasil lebih baik</li>
+                  <li>• Gunakan markdown untuk format teks</li>
+                </ul>
               </div>
               
-              <div className="prose dark:prose-invert prose-sm">
-                <ReactMarkdown
-                  components={{
-                    // @ts-ignore - inline prop does exist in ReactMarkdown but TypeScript doesn't recognize it
-                    code({ node, inline, className, children, ...props }) {
-                      if (inline) {
-                        return <code className="bg-secondary-foreground/10 px-1 py-0.5 rounded" {...props}>{children}</code>;
-                      }
-                      
-                      return (
-                        <pre className="rounded-md overflow-auto">
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        </pre>
-                      );
-                    }
-                  }}
-                >
-                  {message.content}
-                </ReactMarkdown>
+              <div className="bg-card p-4 rounded-lg border space-y-2">
+                <h4 className="font-semibold text-primary">🚀 Contoh Pertanyaan</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• "Bantu saya debug kode ini"</li>
+                  <li>• "Jelaskan konsep React hooks"</li>
+                  <li>• "Bantu analisis dataset ini"</li>
+                  <li>• "Optimalkan query database ini"</li>
+                </ul>
               </div>
             </div>
           </div>
-        ))}
+        ) : (
+          messages.map((message) => (
+            <div 
+              key={message.id}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div 
+                className={`max-w-[80%] p-3 rounded-lg ${
+                  message.role === 'user' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'bg-secondary text-secondary-foreground'
+                }`}
+              >
+                <div className="text-sm opacity-70 mb-1">
+                  {message.role === 'user' ? 'Anda' : 'Neura AI'} • {formatTime(message.createdAt)}
+                </div>
+                
+                <div className="prose dark:prose-invert prose-sm">
+                  <ReactMarkdown
+                    components={{
+                      // @ts-ignore - inline prop does exist in ReactMarkdown but TypeScript doesn't recognize it
+                      code({ node, inline, className, children, ...props }) {
+                        if (inline) {
+                          return <code className="bg-secondary-foreground/10 px-1 py-0.5 rounded" {...props}>{children}</code>;
+                        }
+                        
+                        return (
+                          <pre className="rounded-md overflow-auto">
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          </pre>
+                        );
+                      }
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
         
         {isLoading && (
           <div className="flex justify-start">
